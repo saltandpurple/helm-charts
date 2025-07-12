@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: convex-config
 data:
-  instance-name: {{ .Values.instanceName }}
-  database-url: {{ .Values.databaseUrl }}
-  rust-log: "info"
+{{- range $key, $value := .Values.configMap }}
+  {{ $key }}: {{ $value | quote }}
+{{- end }}

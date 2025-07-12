@@ -1,5 +1,8 @@
-instanceName: "convex-instance"
-instanceSecret: "your-secret-here"
-databaseUrl: "sqlite:///data/convex.db"
+existingSecret: "convex-secret"
+
+configMap:
+  INSTANCE_NAME: "convex-instance"
+  DATABASE_URL: "sqlite:///data/convex.db"
+  RUST_LOG: "info"
 
 host: "convex.local"

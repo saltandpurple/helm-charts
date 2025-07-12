@@ -18,15 +18,11 @@ spec:
         ports:
         - containerPort: 3210
         - containerPort: 3211
-        env:
-        - name: INSTANCE_NAME
-          value: {{ .Values.instanceName }}
-        - name: INSTANCE_SECRET
-          value: {{ .Values.instanceSecret }}
-        - name: DATABASE_URL
-          value: {{ .Values.databaseUrl }}
-        - name: RUST_LOG
-          value: "info"
+        envFrom:
+        - configMapRef:
+            name: convex-config
+        - secretRef:
+            name: {{ .Values.existingSecret }}
         volumeMounts:
         - name: data
           mountPath: /data
