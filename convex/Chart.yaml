@@ -1,0 +1,6 @@
+apiVersion: v2
+name: convex
+description: A Helm chart for Convex application
+type: application
+version: 0.1.0
+appVersion: "6efab6f2b6c182b90255774d747328cfc7b80dd9"
