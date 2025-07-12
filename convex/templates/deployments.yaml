@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: convex-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: convex-backend
+  template:
+    metadata:
+      labels:
+        app: convex-backend
+    spec:
+      containers:
+      - name: backend
+        image: ghcr.io/get-convex/convex-backend:6efab6f2b6c182b90255774d747328cfc7b80dd9
+        ports:
+        - containerPort: 3210
+        - containerPort: 3211
+        env:
+        - name: INSTANCE_NAME
+          value: {{ .Values.instanceName }}
+        - name: INSTANCE_SECRET
+          value: {{ .Values.instanceSecret }}
+        - name: DATABASE_URL
+          value: {{ .Values.databaseUrl }}
+        - name: RUST_LOG
+          value: "info"
+        volumeMounts:
+        - name: data
+          mountPath: /data
+      volumes:
+      - name: data
+        emptyDir: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: convex-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: convex-dashboard
+  template:
+    metadata:
+      labels:
+        app: convex-dashboard
+    spec:
+      containers:
+      - name: dashboard
+        image: ghcr.io/get-convex/convex-dashboard:6efab6f2b6c182b90255774d747328cfc7b80dd9
+        ports:
+        - containerPort: 6791
