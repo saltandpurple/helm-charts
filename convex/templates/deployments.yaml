@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: ghcr.io/get-convex/convex-backend:6efab6f2b6c182b90255774d747328cfc7b80dd9
+        image: {{ .Values.image.backend }}:{{ .Values.image.tag }}
         ports:
         - containerPort: 3210
         - containerPort: 3211
@@ -23,6 +23,18 @@ spec:
             name: convex-config
         - secretRef:
             name: {{ .Values.existingSecret }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3210
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3210
+          initialDelaySeconds: 5
+          periodSeconds: 5
         volumeMounts:
         - name: data
           mountPath: /data
@@ -46,6 +58,18 @@ spec:
     spec:
       containers:
       - name: dashboard
-        image: ghcr.io/get-convex/convex-dashboard:6efab6f2b6c182b90255774d747328cfc7b80dd9
+        image: {{ .Values.image.dashboard }}:{{ .Values.image.tag }}
         ports:
         - containerPort: 6791
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 6791
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 6791
+          initialDelaySeconds: 5
+          periodSeconds: 5
