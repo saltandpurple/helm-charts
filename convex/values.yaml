@@ -1,0 +1,5 @@
+instanceName: "convex-instance"
+instanceSecret: "your-secret-here"
+databaseUrl: "sqlite:///data/convex.db"
+
+host: "convex.local"
